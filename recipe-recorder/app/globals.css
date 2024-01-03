@@ -17,15 +17,41 @@
 }
 
 body {
-  margin-top: 10%;
-  margin-left: 15%;
   background: whitesmoke;
 }
 
 h1{
-  color: #4361EE;
+  /* blue-600 */
+  color: #1d4ed8; 
   font-weight: 800;
   font-size: 400%;
   line-height: 100%;
-  margin-bottom: 20%;
+}
+
+.body {
+  position: fixed;
+  top: 20%;
+  left: 12%;
+}
+
+.body-text {
+  margin-top: 20px;
+}
+
+.log-in {
+  position: fixed;
+  bottom: 10%;
+}
+
+.add-recipe {
+  position: fixed;
+  bottom: 10%;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
 }
