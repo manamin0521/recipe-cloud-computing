@@ -1,18 +1,21 @@
-import { currentUser } from "@clerk/nextjs";
-import Button from "@/components/Button";
+'use client'
 
-const RecipePage = async () => {
-  const user = await currentUser();
+import Button from "@/components/Button";
+import Header from "@/components/Header";
+import { useRouter } from 'next/navigation';
+import { useUser } from "@clerk/nextjs";
+
+export default function RecipePage() {
+  const { user } = useUser();
+  const router = useRouter()
   return (
-    <div>
+    <main>
       <div className='body'>
         <h1>{user?.firstName}'s Recipes</h1>
-        <div className='add-recipe'>
-          <Button text={"Add Recipe"} onClick={undefined}/>
+        <div className='button'>
+          <Button text={"New Recipe"} onClick={() => router.push('/addform')}/>
         </div>
       </div>
-    </div>
+    </main>
   )
 }
-
-export default RecipePage
