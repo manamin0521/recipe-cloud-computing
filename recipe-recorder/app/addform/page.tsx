@@ -7,11 +7,16 @@ import { useState } from "react";
 import {Input} from "@nextui-org/react";
 import {Textarea} from "@nextui-org/react";
 import { useRouter } from 'next/navigation';
+import { useUser } from "@clerk/nextjs";
 
 
 const AddForm = () => {
     const router = useRouter()
-    const [formData, setFormData] = useState()
+
+    const { user } = useUser();
+    const userId = user?.id
+
+    const [formData, setFormData] = useState('')
 
     const handleInputChange = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -23,7 +28,8 @@ const AddForm = () => {
       };
 
     const clickHandler = () => {
-        // link to database
+        // post recipe data to database
+        console.log(userId)
         console.log(formData)
         router.push('/recipe')
     }
