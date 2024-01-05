@@ -1,20 +1,41 @@
 'use client'
 
 import { useRouter } from 'next/navigation';
+import { useState,useEffect } from 'react';
 import Link from 'next/link';
+import { GetServerSideProps } from 'next';
 import Button from '@/components/Button';
+import { routeModule } from 'next/dist/build/templates/pages';
 
 const RecipeDetail = ( {params} ) => {
   const router = useRouter()
 
+  let [ recipe, setRecipe ] = useState('')
+
+  useEffect (() => {
+    fetch('/api/recipe/'+params.id, {
+      method: 'GET'
+    })
+    .then(response => response.json())
+    .then(json => setRecipe(json))
+  },[])
+
   // query recipe from database using variable params.id
-  const recipeName = "RecipeName" 
-  const ingredients = "Ingredients"
-  const method = "Method"
-  
-  const deleteHandler = () => {
-    // delete recipe from database
-    console.log("Recipe Deleted")
+  const recipeName = recipe.recipeName
+  const ingredients = recipe.ingredients
+  const method = recipe.method
+
+  const deleteHandler = async (id:any) => {
+    try {
+        // delete recipe from database
+        await fetch('/api/recipe/'+id, {
+          method: 'DELETE'
+        })
+        console.log(id+" Deleted")
+        router.push('/recipe')
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -30,10 +51,11 @@ const RecipeDetail = ( {params} ) => {
       </div>
       <div className="mt-7">
         <Button text={"Back"} onClick={() => router.push('/recipe')}/>
-        <Link className="ml-5 text-sm underline text-red-600" onClick={deleteHandler} href='/recipe'>Delete</Link>
+        <Link className="ml-5 text-sm underline text-red-600" onClick={() => deleteHandler(params.id)} href='/recipe'>Delete</Link>
       </div>
     </div>
   );
 };
 
 export default RecipeDetail;
+

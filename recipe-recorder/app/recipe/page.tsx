@@ -1,33 +1,33 @@
-'use client'
-
 import Button from "@/components/Button";
 import Header from "@/components/Header";
 import RecipeCard from '@/components/RecipeCard';
-import {ScrollShadow} from "@nextui-org/react";
-import { useRouter } from 'next/navigation';
-import { useUser } from "@clerk/nextjs";
+import {Link, ScrollShadow} from "@nextui-org/react";
+import { currentUser } from '@clerk/nextjs';
+import { prisma } from "@/lib/prisma";
 
-export default function RecipePage() {
-  const { user } = useUser();
-  const router = useRouter()
-  
+export default async function RecipePage() {
+  const user = await currentUser();
   const userId = user?.id
 
-  const recipes = [
-    // display all recipes in database
-    { id: '1',
-      UserId: 'abcd',
-      RecipeName: 'Recipe 1',
-      Ingredients: 'Egg',
-      Method: 'Fry'
-    },
-    { id: '2',
-      UserId: 'abcd',
-      RecipeName: 'Recipe 2',
-      Ingredients: 'Potato',
-      Method: 'Bake'
-    },
-  ];
+  const recipes = await prisma.recipe.findMany({
+    where: {userId:userId},
+  })
+
+  // const recipes = [
+  //   // display all recipes in database
+  //   { id: '1',
+  //     userId: 'abcd',
+  //     recipeName: 'Recipe 1',
+  //     ingredients: 'Egg',
+  //     method: 'Fry'
+  //   },
+  //   { id: '2',
+  //     userId: 'abcd',
+  //     recipeName: 'Recipe 2',
+  //     ingredients: 'Potato',
+  //     method: 'Bake'
+  //   },
+  // ];
 
   return (
     <main>
@@ -45,7 +45,7 @@ export default function RecipePage() {
           </ScrollShadow>
         </div>
         <div className='button'>
-          <Button text={"New Recipe"} onClick={() => router.push('/addform')}/>
+          <Link className='link-button' href='/addform'>New Recipe</Link>
         </div>
       </div>
     </main>
