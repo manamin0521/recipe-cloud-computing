@@ -2,7 +2,6 @@ import Link from 'next/link';
 import {Card, CardBody} from "@nextui-org/react";
 
 const RecipeCard = ({ recipe }) => {
-
     return (
         <Link href={`/recipe/${encodeURIComponent(recipe.id)}`}>
             <div>
@@ -13,7 +12,7 @@ const RecipeCard = ({ recipe }) => {
                     isPressable='true'
                     >
                     <CardBody>
-                        <p>{recipe.RecipeName}</p>
+                        <p>{recipe.recipeName}</p>
                     </CardBody>
                 </Card>
             </div>

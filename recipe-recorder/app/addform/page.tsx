@@ -9,28 +9,34 @@ import {Textarea} from "@nextui-org/react";
 import { useRouter } from 'next/navigation';
 import { useUser } from "@clerk/nextjs";
 
-
 const AddForm = () => {
     const router = useRouter()
 
     const { user } = useUser();
     const userId = user?.id
 
-    const [formData, setFormData] = useState('')
+    const [recipeName, setRecipeName] = useState('')
+    const [ingredients, setIngredients] = useState('')
+    const [method, setMethod] = useState('')
 
-    const handleInputChange = (
-        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-        ) => {
-        setFormData({
-            ...formData,
-            [event.target.name]: event.target.value, 
-        })
-      };
-
-    const clickHandler = () => {
+    const submitData = async (e: React.SyntheticEvent) => {
+        e.preventDefault()
         // post recipe data to database
-        console.log(userId)
-        console.log(formData)
+        try {
+            const body = { userId, recipeName, ingredients, method }
+            await fetch('/api/recipe', {
+                method: "POST", 
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(body),
+            })
+            console.log("Added to Database")
+        } catch (error) {
+            console.error(error)
+        }
+        // console.log(userId)
+        // console.log(recipeName)
+        // console.log(ingredients)
+        // console.log(method)
         router.push('/recipe')
     }
 
@@ -40,33 +46,33 @@ const AddForm = () => {
                 <h1>New Recipe</h1>
                 <div className="mt-5" >
                     <Input 
-                        name="RecipeName" 
+                        name="recipeName" 
                         label="Recipe Name" 
                         labelPlacement="inside"
                         variant="bordered"
-                        onChange={(event)=>handleInputChange(event)}
+                        onChange={(e)=>setRecipeName(e.target.value)}
                     />
                 </div>
                 <div className="mt-5">
                     <Textarea
-                        name="Ingredients"
+                        name="ingredients"
                         label="Ingredients"
                         labelPlacement="inside"
                         variant="bordered"
-                        onChange={(event)=>handleInputChange(event)}
+                        onChange={(e)=>setIngredients(e.target.value)}
                     />
                 </div>
                 <div className="mt-5">
                     <Textarea
-                        name="Method"
+                        name="method"
                         label="Method"
                         labelPlacement="inside"
                         variant="bordered"
-                        onChange={(event)=>handleInputChange(event)}
+                        onChange={(e)=>setMethod(e.target.value)}
                     />
                 </div>
                 <div className="mt-7">
-                    <Button text={"Add Recipe"} onClick={clickHandler}/>
+                    <Button text={"Add Recipe"} onClick={submitData}/>
                     <Link className="ml-5 text-sm underline" href='/recipe'>Cancel</Link>
                 </div>
             </div>
