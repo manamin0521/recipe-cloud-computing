@@ -1,6 +1,6 @@
 # Recipe Recorder
 
-The Recipe Recorder allows users to record recipe onto their accounts.
+The Recipe Recorder allows users to record recipe onto their accounts
 
 ## Getting Started
 
@@ -35,7 +35,7 @@ Before you begin, ensure you have met the following requirements:
 
 4. **Configure Clerk Authentication and Database Connection**
 
-    Create `.env.local` file and put in the `CLERK_PUBLIC_KEY` and `CLERK_API_KEY` with your Clerk public and secret keys obtained from your Clerk dashboard.
+    Create `.env.local` file and put in the `CLERK_PUBLIC_KEY` and `CLERK_API_KEY` with your Clerk public and secret keys obtained from your Clerk dashboard
    
     Replace the database connection URL in the .env file with your actual database connection URL
 
