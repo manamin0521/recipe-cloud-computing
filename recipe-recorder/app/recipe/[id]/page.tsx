@@ -11,7 +11,13 @@ const RecipeDetail = ( {params}:{params:any} ) => {
 
   const router = useRouter()
 
-  let [ recipe, setRecipe ] = useState('')
+  let [ recipe, setRecipe ] = useState<{id: number; userId: string; recipeName: string; ingredients: string; method: string;}>({
+    id: 0,
+    userId: "",
+    recipeName: "",
+    ingredients: "",
+    method: ""
+  })
 
   useEffect (() => {
     fetch('/api/recipe/'+params.id, {
