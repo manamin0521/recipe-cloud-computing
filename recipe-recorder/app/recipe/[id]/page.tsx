@@ -7,7 +7,8 @@ import { GetServerSideProps } from 'next';
 import Button from '@/components/Button';
 import { routeModule } from 'next/dist/build/templates/pages';
 
-const RecipeDetail = ( {params} ) => {
+const RecipeDetail = ( {params}:{params:any} ) => {
+
   const router = useRouter()
 
   let [ recipe, setRecipe ] = useState('')
