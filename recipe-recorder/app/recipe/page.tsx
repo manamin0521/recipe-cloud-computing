@@ -33,7 +33,7 @@ export default async function RecipePage() {
     <main>
       <div className='body'>
         <div className='box-content pb-5'>
-          <h1>{user?.firstName}'s Recipes</h1>
+          <h1>{user?.firstName}&apos;s Recipes</h1>
         </div>
         <div>
           <ScrollShadow className="h-[300px]">
